@@ -1,71 +1,104 @@
-# So_long — Meu Primeiro Jogo 2D com MLX
+# My_game_2D
 
-- O so_long foi meu primeiro contato real com desenvolvimento de jogos em C. Aqui eu aprendi a usar a MLX, trabalhar com renderização 2D, lidar com sprites, colisões e toda a lógica básica de um game simples, mas completo.
----
-## 🚀 Sobre o Jogo
+Implementação do projeto `so_long`, um jogo 2D em C desenvolvido como parte da formação da 42 Rio.
 
-- Você controla um personagem que precisa atravessar o mapa coletando itens e alcançando a saída.
-O desafio está em navegar pelo labirinto, evitar paredes e planejar a rota ideal.
----
-## 🧩 Principais Aprendizados
+O projeto usa a MiniLibX para renderizar uma janela gráfica, carregar sprites, ler mapas no formato `.ber` e controlar a movimentação do jogador em um mapa baseado em matriz.
 
-- Como funciona a renderização 2D na MLX.
-- Carregamento de imagens e manipulação de sprites.
-- Sistema de movimentação + colisão.
-- Estruturação de um loop de jogo (update + render).
-- Tratamento de eventos do teclado.
-- Leitura e validação do mapa via arquivo .ber.
----
-## 🔧 Ferramentas e Soluções
+## Objetivo
 
-- C.
-- MiniLibX (MLX).
-- Sistema de mapa em matriz.
-- Controle de eventos via hooks da MLX.
-- Organização do código em módulos (janela, mapa, player, render…).
----
-## 🎮 Como Jogar
+Criar um jogo 2D simples, mas completo, aplicando conceitos de renderização, eventos, validação de mapa, colisão e organização de código em C.
 
-Compile o projeto:
-```
+## Tecnologias e conceitos utilizados
+
+- C
+- Makefile
+- MiniLibX
+- X11
+- Renderização 2D
+- Sprites
+- Eventos de teclado
+- Validação de mapas `.ber`
+- Estrutura de mapa em matriz
+- Gerenciamento manual de memória
+
+## Funcionamento geral
+
+O jogador precisa navegar pelo mapa, coletar todos os itens e chegar até a saída.
+
+Regras principais:
+
+- o mapa é carregado a partir de um arquivo `.ber`;
+- paredes bloqueiam o movimento;
+- os coletáveis devem ser obtidos antes da saída;
+- cada movimento do jogador é contabilizado;
+- o jogo usa eventos de teclado para movimentação.
+
+## Como compilar e executar
+
+Pré-requisitos:
+
+- ambiente Linux;
+- `make`;
+- compilador C;
+- dependências da MiniLibX/X11 instaladas.
+
+```sh
+git clone https://github.com/vinionix/My_game_2D.git
+cd My_game_2D
 make
-```
-Rode passando o mapa:
-```
 ./so_long maps/map.ber
 ```
 
-## 🗺️ Regras do Jogo
+Alvos disponíveis:
 
-- Use as teclas W A S D para mover.
-- Pegue todos os colecionáveis.
-- Evite paredes.
-- Alcance a saída quando todos os itens forem coletados.
-
-Cada movimento conta!
----
-## 📁 Estrutura Simplificada
+```sh
+make
+make clean
+make fclean
+make re
 ```
-so_long/
-├── src/
-│   ├── main.c
-│   ├── render/
-│   ├── player/
-│   ├── map/
-│   └── utils/
+
+## Estrutura geral
+
+Estrutura simplificada do projeto:
+
+```text
+My_game_2D/
+├── gnl/
+├── lib/
 ├── maps/
-├── assets/
+├── minilibx-linux/
+├── main.c
+├── parsing.c
+├── ft_render_map.c
+├── ft_move_player.c
 └── Makefile
 ```
----
-## ⚠️ Desafios do Projeto
 
-- Aprender a usar a MLX do zero.
-- Entender como funcionam imagens e buffers na prática.
-- Garantir que o mapa fosse válido, jogável e sem bugs.
-- Lidar com eventos sem travar o jogo.
----
-## 🏁 Status
+## Status atual
 
-- Projeto finalizado, estável e funcionando com diferentes mapas.
----
+Projeto implementado com leitura de mapa, validação, renderização, movimentação e controle básico de jogo.
+
+O repositório não informa testes automatizados ou resultado de avaliação. A documentação foi escrita com base nos arquivos disponíveis no projeto.
+
+## Evolução do projeto
+
+- Criação da estrutura base em C com MiniLibX.
+- Implementação da leitura de mapas `.ber`.
+- Validação das regras do mapa.
+- Carregamento de assets e renderização do cenário.
+- Implementação da movimentação do jogador e colisões.
+- Fase atual: projeto documentado para consulta e portfólio.
+
+## Aprendizados principais
+
+- Como criar uma janela gráfica com MiniLibX.
+- Como carregar e renderizar sprites.
+- Como representar um mapa 2D usando matriz.
+- Como validar arquivos de mapa antes de executar o jogo.
+- Como tratar eventos de teclado.
+- Como organizar um projeto gráfico em C.
+
+## Autor
+
+Desenvolvido por [vinionix](https://github.com/vinionix) durante a formação na 42 Rio.
