@@ -1,66 +1,60 @@
-# My_game_2D
+# My_game_2D — so_long
 
-Implementação do projeto `so_long`, um jogo 2D em C desenvolvido como parte da formação da 42 Rio.
+Jogo 2D em C desenvolvido durante a formação da 42 Rio usando MiniLibX.
 
-O projeto usa a MiniLibX para renderizar uma janela gráfica, carregar sprites, ler mapas no formato `.ber` e controlar a movimentação do jogador em um mapa baseado em matriz.
+O projeto transforma um mapa `.ber` em um ambiente gráfico navegável e conecta várias responsabilidades normalmente separadas: leitura de arquivo, validação, estado do jogo, renderização de sprites, eventos de teclado, colisão e cleanup de recursos.
 
 ## Objetivo
 
-Criar um jogo 2D simples, mas completo, aplicando conceitos de renderização, eventos, validação de mapa, colisão e organização de código em C.
+Criar um jogo simples em que o jogador percorre o mapa, coleta todos os itens e alcança a saída, respeitando paredes e as regras definidas pelo arquivo de mapa.
 
-## Tecnologias e conceitos utilizados
+## Fluxo técnico
+
+```text
+arquivo .ber
+    ↓
+leitura / parsing
+    ↓
+validação do mapa
+    ↓
+inicialização MiniLibX
+    ↓
+carregamento de sprites
+    ↓
+renderização
+    ↓
+eventos de teclado
+    ↓
+atualização do estado
+    ↓
+nova renderização
+```
+
+## Tecnologias e conceitos
 
 - C
 - Makefile
 - MiniLibX
 - X11
-- Renderização 2D
-- Sprites
-- Eventos de teclado
-- Validação de mapas `.ber`
-- Estrutura de mapa em matriz
-- Gerenciamento manual de memória
+- sprites
+- renderização 2D
+- event loop
+- parsing de arquivos `.ber`
+- matriz 2D
+- validação de mapas
+- colisão
+- gerenciamento manual de memória
 
-## Funcionamento geral
+## Regras principais
 
-O jogador precisa navegar pelo mapa, coletar todos os itens e chegar até a saída.
+- o mapa é carregado de um arquivo `.ber`;
+- paredes bloqueiam movimento;
+- coletáveis precisam ser obtidos antes da conclusão;
+- a saída faz parte da condição de vitória;
+- movimentos do jogador são contabilizados;
+- eventos de teclado controlam a movimentação.
 
-Regras principais:
-
-- o mapa é carregado a partir de um arquivo `.ber`;
-- paredes bloqueiam o movimento;
-- os coletáveis devem ser obtidos antes da saída;
-- cada movimento do jogador é contabilizado;
-- o jogo usa eventos de teclado para movimentação.
-
-## Como compilar e executar
-
-Pré-requisitos:
-
-- ambiente Linux;
-- `make`;
-- compilador C;
-- dependências da MiniLibX/X11 instaladas.
-
-```sh
-git clone https://github.com/vinionix/My_game_2D.git
-cd My_game_2D
-make
-./so_long maps/map.ber
-```
-
-Alvos disponíveis:
-
-```sh
-make
-make clean
-make fclean
-make re
-```
-
-## Estrutura geral
-
-Estrutura simplificada do projeto:
+## Estrutura
 
 ```text
 My_game_2D/
@@ -75,30 +69,67 @@ My_game_2D/
 └── Makefile
 ```
 
-## Status atual
+## Validação de mapa
 
-Projeto implementado com leitura de mapa, validação, renderização, movimentação e controle básico de jogo.
+Antes de iniciar a janela, um mapa deve ser tratado como dado não confiável. Casos que merecem validação incluem:
 
-O repositório não informa testes automatizados ou resultado de avaliação. A documentação foi escrita com base nos arquivos disponíveis no projeto.
+- formato retangular;
+- paredes fechando o perímetro;
+- caracteres permitidos;
+- presença das entidades obrigatórias;
+- quantidade válida de player/saída;
+- caminho possível até coletáveis;
+- caminho possível até a saída.
 
-## Evolução do projeto
+Separar essa validação da renderização impede que uma entrada inválida seja descoberta apenas depois de inicializar recursos gráficos.
 
-- Criação da estrutura base em C com MiniLibX.
-- Implementação da leitura de mapas `.ber`.
-- Validação das regras do mapa.
-- Carregamento de assets e renderização do cenário.
-- Implementação da movimentação do jogador e colisões.
-- Fase atual: projeto documentado para consulta e portfólio.
+## Como compilar e executar
 
-## Aprendizados principais
+Pré-requisitos:
 
-- Como criar uma janela gráfica com MiniLibX.
-- Como carregar e renderizar sprites.
-- Como representar um mapa 2D usando matriz.
-- Como validar arquivos de mapa antes de executar o jogo.
-- Como tratar eventos de teclado.
-- Como organizar um projeto gráfico em C.
+- Linux;
+- compilador C;
+- `make`;
+- dependências da MiniLibX/X11.
+
+```bash
+git clone https://github.com/vinionix/My_game_2D.git
+cd My_game_2D
+make
+./so_long maps/map.ber
+```
+
+## Casos de teste
+
+- mapa válido pequeno;
+- mapa não retangular;
+- parede externa aberta;
+- player ausente;
+- saída ausente;
+- coletável ausente;
+- caractere inválido;
+- coletável inacessível;
+- saída inacessível;
+- movimento repetido contra parede;
+- fechamento da janela pelo sistema.
+
+## Status
+
+O repositório contém leitura e validação de mapa, renderização, movimentação e controle básico do jogo. Não há afirmação de suíte automatizada ou nota oficial da 42 sem evidência no próprio repositório.
+
+## O que este projeto demonstra
+
+- programação gráfica em C;
+- event-driven programming;
+- parsing e validação de arquivos;
+- modelagem de estado com matriz;
+- separação entre lógica e renderização;
+- gerenciamento de recursos gráficos e memória.
+
+## Documentação
+
+- [Technical Overview](docs/TECHNICAL_OVERVIEW.md) — fluxo do jogo, responsabilidades, validação e estratégia de testes.
 
 ## Autor
 
-Desenvolvido por [vinionix](https://github.com/vinionix) durante a formação na 42 Rio.
+Desenvolvido por [Vinícius Fidelis](https://github.com/vinionix) durante a formação na 42 Rio.
